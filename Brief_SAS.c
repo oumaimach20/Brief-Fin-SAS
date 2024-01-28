@@ -63,6 +63,33 @@ int ajouter(struct Task taches[], int numTask) {
 
     return numTask;
 }
+// Function to display the list of tasks
+void afficher(struct Task taches[], int numTask) {
+    printf("\nList of tasks:\n");
+
+    for (int i = 0; i < numTask; i++) {
+        printf("Task %d:\n", i + 1);
+        printf("Name: %s\n", taches[i].name);
+        printf("Description: %s\n", taches[i].description);
+        printf("Deadline: %d/%d/%d\n", taches[i].deadline.day, taches[i].deadline.month, taches[i].deadline.year);
+        printf("Priority: ");
+        switch (taches[i].priority) {
+        case HIGH:
+            printf("High\n");
+            break;
+        case MEDIUM:
+            printf("Medium\n");
+            break;
+        case LOW:
+            printf("Low\n");
+            break;
+        default:
+            printf("Unknown\n");
+        }
+        printf("\n");
+    }
+}
+
 int main() {
 	char choix;
 	//Afficher le menu
@@ -86,7 +113,7 @@ int main() {
         break;
     case 2:
         // Display the list of tasks
-        //Add the code for displaying the list of tasks
+        //afficher(taches, numTask);
         break;
     case 3:
         // Modify a task
