@@ -89,6 +89,16 @@ void afficher(struct Task taches[], int numTask) {
         printf("\n");
     }
 }
+// Function to delete a task
+int supprimer(struct Task taches[], int numTask) {
+    if (numTask == 0) {
+        printf("No tasks to delete.\n");
+        return numTask;
+    }
+
+    int indexToDelete;
+    printf("Enter the index of the task to delete (1 to %d): ", numTask);
+    scanf("%d", &indexToDelete);
 
 int main() {
 	char choix;
@@ -121,7 +131,7 @@ int main() {
         break;
     case 4:
         // Delete a task
-        //Add the code for deleting an existing task
+        numTask = supprimer(taches, numTask);
         break;
     case 5:
         // Sort tasks by date
