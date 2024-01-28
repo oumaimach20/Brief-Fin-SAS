@@ -1,27 +1,27 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
 
 // Enumeration for priority levels
 enum Priority {
-	HIGH = 1,
-	MEDIUM,
-	LOW
+    HIGH = 1,
+    MEDIUM,
+    LOW
 };
 
 // Structure for representing a date
 struct Date {
-	int day;
-	int month;
-	int year;
+    int day;
+    int month;
+    int year;
 };
 
 // Structure for representing a task
 struct Task {
-	char name[50];
-	char description[100];
-	struct Date deadline;
-	enum Priority priority;
+    char name[50];
+    char description[100];
+    struct Date deadline;
+    enum Priority priority;
 };
+
 // Function to add a new task
 int ajouter(struct Task taches[], int numTask) {
     printf("New task:\n");
@@ -63,6 +63,7 @@ int ajouter(struct Task taches[], int numTask) {
 
     return numTask;
 }
+
 // Function to display the list of tasks
 void afficher(struct Task taches[], int numTask) {
     printf("\nList of tasks:\n");
@@ -89,6 +90,7 @@ void afficher(struct Task taches[], int numTask) {
         printf("\n");
     }
 }
+
 // Function to delete a task
 int supprimer(struct Task taches[], int numTask) {
     if (numTask == 0) {
@@ -100,56 +102,78 @@ int supprimer(struct Task taches[], int numTask) {
     printf("Enter the index of the task to delete (1 to %d): ", numTask);
     scanf("%d", &indexToDelete);
 
-int main() {
-	char choix;
-	//Afficher le menu
-	printf("   Bienvenue dans le logiciel de gestion des taches(:\n");
-	printf("\n        Menu :\n");
-	printf("\n1.Ajouter une tache.\n");
-	printf("2.Afficher la liste des taches.\n");
-	printf("3.Modifier une tache.\n");
-	printf("4.Supprimer une tache.\n");
-	printf("5.Ordonner les taches.\n");
-	printf("6.Filtrer les taches.\n");
-	printf("7.Quitter.\n");
-	//Demander à l'utilisateur de choisir
-	printf("\nVeuillez entrer votre choix:");
-	scanf("%c", &choix);
-
-    switch (choix) {
-    case 1:
-        // Add a task
-        numTask = ajouter(taches, numTask);
-        break;
-    case 2:
-        // Display the list of tasks
-        //afficher(taches, numTask);
-        break;
-    case 3:
-        // Modify a task
-        // Add the code for modifying a task
-        break;
-    case 4:
-        // Delete a task
-        numTask = supprimer(taches, numTask);
-        break;
-    case 5:
-        // Sort tasks by date
-        // Add the code for sorting tasks by date
-        break;
-    case 6:
-        // Filter tasks by priority
-        // Add the code for filtering tasks by priority
-        break;
-    case 7:
-        // Quit the program
-        printf("Goodbye!\n");
-        break;
-    default:
-        printf("Invalid choice. Please try again.\n");
+    if (indexToDelete < 1 || indexToDelete > numTask) {
+        printf("Invalid index. Please enter a valid index.\n");
     }
-	
+    else {
+        // Shift remaining tasks to fill the gap
+        for (int i = indexToDelete - 1; i < numTask - 1; i++) {
+            taches[i] = taches[i + 1];
+        }
+
+        // Decrement the total number of tasks
+        numTask--;
+
+        printf("Task deleted successfully!\n");
+    }
+
+    return numTask;
+}
 
 
+int main() {
+    // Declare an array of tasks
+    struct Task taches[100];
+    int numTask = 0;
 
+    int choix;
+
+    do {
+        // Display the menu
+        printf("\nMenu:\n");
+        printf("1. Add a task\n");
+        printf("2. Display the list of tasks\n");
+        printf("3. Modify a task\n");
+        printf("4. Delete a task\n");
+        printf("5. Sort tasks by date\n");
+        printf("6. Filter tasks by priority\n");
+        printf("7. Quit\n");
+        printf("Choice: ");
+        scanf("%d", &choix);
+
+        switch (choix) {
+        case 1:
+            // Add a task
+            numTask = ajouter(taches, numTask);
+            break;
+        case 2:
+            // Display the list of tasks
+            afficher(taches, numTask);
+            break;
+        case 3:
+            // Modify a task
+            // Add the code for modifying a task
+            break;
+        case 4:
+            // Delete a task
+            numTask = supprimer(taches, numTask);
+            break;
+        case 5:
+            // Sort tasks by date
+            // Add the code for sorting tasks by date
+            break;
+        case 6:
+            // Filter tasks by priority
+            // Add the code for filtering tasks by priority
+            break;
+        case 7:
+            // Quit the program
+            printf("Goodbye!\n");
+            break;
+        default:
+            printf("Invalid choice. Please try again.\n");
+        }
+    } while (choix != 7);
+
+    return 0;
 }
