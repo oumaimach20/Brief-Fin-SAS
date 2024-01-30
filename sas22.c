@@ -13,7 +13,60 @@ struct Task {
     char name[50];
     char description[100];
     struct Date deadline;
-    char priority[10]; 
+    char priority[10]; // Changed to string for priority
+};
+
+// Function to exchange two tasks
+void echange(struct Task* a, struct Task* b) {
+    struct Task tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+// Function to sort tasks by date in ascending order
+void triBulleCroissant(struct Task taches[], int numTask) {
+    int i, j;
+    for (i = 0; i < numTask - 1; i++) {
+        for (j = 0; j < numTask - i - 1; j++) {
+            if ((taches[j].deadline.year > taches[j + 1].deadline.year) ||
+                (taches[j].deadline.year == taches[j + 1].deadline.year &&
+                    taches[j].deadline.month > taches[j + 1].deadline.month) ||
+                (taches[j].deadline.year == taches[j + 1].deadline.year &&
+                    taches[j].deadline.month == taches[j + 1].deadline.month &&
+                    taches[j].deadline.day > taches[j + 1].deadline.day))
+                echange(&taches[j], &taches[j + 1]);
+        }
+    }
+}
+
+// Function to sort tasks by date in descending order
+void triBulleDecroissant(struct Task taches[], int numTask) {
+    int i, j;
+    for (i = 0; i < numTask - 1; i++) {
+        for (j = 0; j < numTask - i - 1; j++) {
+            if ((taches[j].deadline.year < taches[j + 1].deadline.year) ||
+                (taches[j].deadline.year == taches[j + 1].deadline.year &&
+                    taches[j].deadline.month < taches[j + 1].deadline.month) ||
+                (taches[j].deadline.year == taches[j + 1].deadline.year &&
+                    taches[j].deadline.month == taches[j + 1].deadline.month &&
+                    taches[j].deadline.day < taches[j + 1].deadline.day))
+                echange(&taches[j], &taches[j + 1]);
+        }
+    }
+}
+
+// Function to display the order of tasks
+void affichage(struct Task taches[], int numTask) {
+    printf("\nOrder of tasks:\n");
+    for (int i = 0; i < numTask; i++) {
+        printf("Task %d:\n", i + 1);
+        printf("Name: %s\n", taches[i].name);
+        printf("Description: %s\n", taches[i].description);
+        printf("Deadline: %d/%d/%d\n", taches[i].deadline.day, taches[i].deadline.month, taches[i].deadline.year);
+        printf("Priority: %s\n", taches[i].priority);
+        printf("\n");
+    }
+}
 
 // Function to add a new task
 int ajouter(struct Task taches[], int numTask) {
@@ -99,7 +152,6 @@ void modifier(struct Task taches[], int numTask) {
         printf("Invalid index. Please enter a valid index.\n");
     }
     else {
-
         // Ask the user to enter new details
         printf("Enter new details for Task %d:\n", indexToEdit);
         printf("Name: ");
@@ -122,10 +174,14 @@ int main() {
     int numTask = 0;
 
     int choix;
+    int ordre;
 
+    // Welcoming the user
+    printf("Welcome to the Task Management Software:)\n");
     do {
+
         // Display the menu
-        printf("\nMenu:\n");
+        printf("\n             Menu:\n \n");
         printf("1. Add a task\n");
         printf("2. Display the list of tasks\n");
         printf("3. Modify a task\n");
@@ -133,7 +189,7 @@ int main() {
         printf("5. Sort tasks by date\n");
         printf("6. Filter tasks by priority\n");
         printf("7. Quit\n");
-        printf("Choice: ");
+        printf("\n Choice: ");
         scanf("%d", &choix);
 
         switch (choix) {
@@ -155,7 +211,31 @@ int main() {
             break;
         case 5:
             // Sort tasks by date
-            // Add the code for sorting tasks by date
+            printf("Choose order for sorting:\n");
+            printf("1. Ascending\n");
+            printf("2. Descending\n");
+            printf("Order: ");
+            scanf("%d", &ordre);
+
+            printf(" Tasks before the sort : \n");
+            affichage(taches, numTask);
+
+            if (ordre == 1) {
+                // Ascending order
+                triBulleCroissant(taches, numTask);
+                printf("Tasks after the sort (Ascending): \n");
+            }
+            else if (ordre == 2) {
+                // Descending order
+                triBulleDecroissant(taches, numTask);
+                printf("Tasks after the sort (Descending): \n");
+            }
+            else {
+                printf("Invalid order choice.\n");
+                continue;
+            }
+
+            affichage(taches, numTask);
             break;
         case 6:
             // Filter tasks by priority
@@ -163,10 +243,10 @@ int main() {
             break;
         case 7:
             // Quit the program
-            printf("Goodbye!\n");
+            printf("Goodbye! It was nice to see you here!\n");
             break;
         default:
-            printf("Invalid choice. Please try again.\n");
+            printf("Invalid choice. Please try again:)\n");
         }
     } while (choix != 7);
 
