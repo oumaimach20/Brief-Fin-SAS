@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 
 // Structure for representing a date
 struct Date {
@@ -167,6 +166,22 @@ void modifier(struct Task taches[], int numTask) {
         printf("Task edited successfully!\n");
     }
 }
+//Function for filtring the tasks by priority
+
+void filtrer(struct Task taches[], numTask, int priority) {
+    printf("\n Filtered tasks by priority %d : \n", priority);
+    for (int i = 1; i < numTask; i++) {
+        if (taches[i].priority == priority) {
+            printf("Task %d:\n", i + 1);
+            printf("Name: %s \n", taches[i].name);
+            printf("Description: %s\n", taches[i].description);
+            printf("Date: %d/%d/%d\n", taches[i].deadline.day, taches[i].deadline.month, taches[i].deadline.year);
+            printf("Priority: % s\n", taches[i].priority);
+        }
+    }
+
+
+}
 
 int main() {
     // Declare an array of tasks
@@ -239,7 +254,9 @@ int main() {
             break;
         case 6:
             // Filter tasks by priority
-            // Add the code for filtering tasks by priority
+            printf("Enter priority to filter(1:High, 2: Medium, 3:Low):");
+            scanf("%d", &priority);
+            filtrer(taches, numTask, priority);
             break;
         case 7:
             // Quit the program
