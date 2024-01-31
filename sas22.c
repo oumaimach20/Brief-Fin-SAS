@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 // Structure for representing a date
 struct Date {
@@ -12,7 +13,7 @@ struct Task {
     char name[50];
     char description[100];
     struct Date deadline;
-    char priority[10]; 
+    char priority[10]; // Changed to string for priority
 };
 
 // Function to exchange two tasks
@@ -176,9 +177,9 @@ int main() {
     int ordre;
 
     // Welcoming the user
-    printf("Welcome to the Task Management Software:)\n");
+        printf("Welcome to the Task Management Software:)\n");
     do {
-
+        
         // Display the menu
         printf("\n             Menu:\n \n");
         printf("1. Add a task\n");
@@ -242,7 +243,7 @@ int main() {
             break;
         case 7:
             // Quit the program
-            printf("Goodbye! It was nice to see you here!\n");
+            printf("\n Goodbye! It was nice to see you here :)!\n");
             break;
         default:
             printf("Invalid choice. Please try again:)\n");
